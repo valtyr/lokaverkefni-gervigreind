@@ -19,3 +19,15 @@ print('\nhistory dict:', history.history)
 print('\n# Evaluate on test data')
 results = model.evaluate(tokenized_validation_data)
 print('test loss, test acc:', results)
+
+
+def predict_sentence(sentence: str):
+    tokenized_sentence = tokenizer.tokenize_sentence(sentence)
+    return model.classify(tokenized_sentence)
+
+
+print(
+    predict_sentence("I love you son you are the prettiest boy and most kind"))
+
+model.save()
+tokenizer.save()

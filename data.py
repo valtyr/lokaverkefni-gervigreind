@@ -8,6 +8,15 @@ column_labels = [
     'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'
 ]
 
+ResultsTuple = namedtuple('Results', column_labels)
+
+
+class Results(ResultsTuple):
+    def __repr__(self):
+        values = list(self)
+        max_idx = np.argmax(values)
+        return f'<Results ({column_labels[max_idx]}, certainty: {values[max_idx]})>'
+
 
 def unique_words(df):
     df['comment_text'].str.lower().str.split()
