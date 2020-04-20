@@ -25,11 +25,14 @@ def unique_words(df):
     return len(results)
 
 
-def load_data(filename='train.csv', sample_size=10000, data_split=0.4):
+def load_data(filename='train.csv', sample_size=None, data_split=0.4):
     data = pd.read_csv(f'./data/{filename}')
 
     data['none'] = 1 - data[column_labels].max(axis=1)
     data['comment_text'].fillna("unknown", inplace=True)
+
+    if sample_size is None:
+        sample_size = data.shape[0]
 
     n_train = int(sample_size * data_split)
     n_validation = sample_size - n_train

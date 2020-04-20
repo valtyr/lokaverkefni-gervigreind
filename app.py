@@ -1,6 +1,8 @@
 from data import load_data
 from tokenizer import Tokenizer
-from model import Model
+from model import Model, GRUModel
+
+import pickle
 
 training_data, validation_data = load_data()
 
@@ -10,7 +12,7 @@ tokenizer.fit(training_data)
 tokenized_data = tokenizer.tokenize(training_data)
 tokenized_validation_data = tokenizer.tokenize(validation_data)
 
-model = Model()
+model = GRUModel()
 model.build(tokenized_data)
 
 history = model.fit(tokenized_data)
@@ -31,3 +33,6 @@ print(
 
 model.save()
 tokenizer.save()
+
+with open('training_results.pickle') as file:
+    pickle.dump([results, history], file)
