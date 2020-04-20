@@ -9,7 +9,7 @@ from keras.preprocessing.text import Tokenizer, text_to_word_sequence
 
 import tensorflow as tf
 from keras.layers.core import Flatten
-# tf.config.experimental.set_visible_devices([], 'GPU')
+tf.config.experimental.set_visible_devices([], 'GPU')
 
 
 class Model:
