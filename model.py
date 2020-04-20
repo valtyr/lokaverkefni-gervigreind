@@ -11,7 +11,9 @@ import numpy as np
 import tensorflow as tf
 from keras.layers.core import Flatten
 from keras.layers.pooling import GlobalMaxPooling1D
-tf.config.experimental.set_visible_devices([], 'GPU')
+from keras.callbacks.callbacks import EarlyStopping
+
+# tf.config.experimental.set_visible_devices([], 'GPU')
 
 
 class Model:
@@ -100,12 +102,14 @@ class GRUModel:
                            metrics=["accuracy"])
 
     def fit(self, dataset: TokenizedData):
+        es = EarlyStopping(monitor='val_loss', mode='min')
         self.history = self.model.fit(x=dataset.input,
                                       y=dataset.output,
                                       batch_size=64,
                                       verbose=True,
-                                      epochs=1,
-                                      validation_split=0.3)
+                                      epochs=20,
+                                      validation_split=0.3,
+                                      callbacks=[es])
         return self.history
 
     def evaluate(self, dataset: TokenizedData):
